@@ -34,5 +34,3 @@
   [& args]
   (println "\nCreating your server...")
   (server/start runnable-service))
-
-(server/start runnable-service)
