@@ -5,7 +5,7 @@
             [my-api.service :as service]))
 
 (def service
-  (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
+  (::bootstrap/service-fn (bootstrap/create-servlet service/service-prod)))
 
 (deftest home-page-test
   (is (=

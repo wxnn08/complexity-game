@@ -1,36 +1,47 @@
 (ns my-api.server
   (:gen-class) ; for -main method in uberjar
-  (:require [io.pedestal.http :as server]
-            [io.pedestal.http.route :as route]
+  (:require [io.pedestal.http :as http]
             [my-api.service :as service]))
 
-;; This is an adapted service map, that can be started and stopped
-;; From the REPL you can call server/start and server/stop on this service
-(defonce runnable-service (server/create-server service/service))
+(defn service-prod []
+  {:env :prod
+   ::http/routes (service/routes)
+   ::http/resource-path "/public"
+   ::http/type :jetty
+   ::http/port 8080
+   ::http/host "0.0.0.0"
+   ::http/container-options {:h2c? true
+                             :h2? false
+                             :ssl? false}})
 
-(defn run-dev
-  "The entry-point for 'lein run-dev'"
-  [& args]
-  (println "\nCreating your [DEV] server...")
-  (-> service/service ;; start with production configuration
-      (merge {:env :dev
-              ;; do not block thread that starts web server
-              ::server/join? false
-              ;; Routes can be a function that resolve routes,
-              ;;  we can use this to set the routes to be reloadable
-              ::server/routes #(route/expand-routes (deref #'service/routes))
-              ;; all origins are allowed in dev mode
-              ::server/allowed-origins {:creds true :allowed-origins (constantly true)}
-              ;; Content Security Policy (CSP) is mostly turned off in dev mode
-              ::server/secure-headers {:content-security-policy-settings {:object-src "'none'"}}})
-      ;; Wire up interceptor chains
-      server/default-interceptors
-      server/dev-interceptors
-      server/create-server
-      server/start))
+(defn service-dev []
+  (-> (service-prod)
+      (merge {::http/join? false})))
+
+(defonce server (atom nil))
+
+(defn start-server! [server-env]
+  (reset! server (http/start server-env)))
+
+(defn stop-server! []
+  (http/stop @server)
+  (reset! server nil))
+
+(defn restart-server! [server-env]
+  (stop-server!)
+  (start-server! server-env))
+
+(defn start! [env]
+  (let [service (if (= :prod env)
+                  (service-prod)
+                  (service-dev))
+        custom-server (http/create-server service)]
+    (if (nil? @server)
+      (start-server! custom-server)
+      (restart-server! custom-server))))
 
 (defn -main
   "The entry-point for 'lein run'"
   [& args]
   (println "\nCreating your server...")
-  (server/start runnable-service))
+  (start! :prod))
