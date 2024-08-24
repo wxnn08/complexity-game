@@ -9,8 +9,8 @@ base: cloudius/osv-openjdk8
 #
 # The command line passed to OSv to start up the application.
 #
-#cmdline: /java.so -cp /my-api/app.jar clojure.main -m my-api
-cmdline: /java.so -jar /my-api/app.jar
+#cmdline: /java.so -cp /complexity-game/app.jar clojure.main -m complexity-game
+cmdline: /java.so -jar /complexity-game/app.jar
 
 #
 # The command to use to build the application.
@@ -25,5 +25,4 @@ cmdline: /java.so -jar /my-api/app.jar
 # List of files that are included in the generated image.
 #
 files:
-  /my-api/app.jar: ./target/my-api-0.0.1-SNAPSHOT-standalone.jar
-
+  /complexity-game/app.jar: ./target/complexity-game-0.0.1-SNAPSHOT-standalone.jar

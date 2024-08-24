@@ -1,4 +1,4 @@
-(defproject my-api "0.0.1-SNAPSHOT"
+(defproject complexity-game "0.0.1-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -15,7 +15,7 @@
                  [org.slf4j/log4j-over-slf4j "1.7.35"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
-  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "my-api.server/run-dev"]}
+  :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "complexity-game.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.6.3"]]}
-             :uberjar {:aot [my-api.server]}}
-  :main ^{:skip-aot true} my-api.server)
+             :uberjar {:aot [complexity-game.server]}}
+  :main ^{:skip-aot true} complexity-game.server)
