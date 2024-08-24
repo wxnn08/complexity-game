@@ -1,0 +1,1 @@
+["^ ","~$coerce!",["^ ","~:row",5,"~:col",1,"~:fixed-arities",["~#set",[2]],"~:name","^0","~:ns","~$my-api.schema.middleware","~:top-ns","^7","~:arities",["^ ","~i2",["^ ","~:ret","~:fn","~:arglist-str","[handler schema]"]],"~:type","^;"],"~:filename","/home/wesley/Documents/learning/clojure/my-api/src/my_api/schema/middleware.clj"]

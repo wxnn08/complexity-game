@@ -35,7 +35,9 @@
   (let [service (if (= :prod env)
                   (service-prod)
                   (service-dev))
-        custom-server (http/create-server service)]
+        custom-server (http/create-server (-> service
+                                              http/default-interceptors
+                                              (update ::http/interceptors into [http/json-body])))]
     (if (nil? @server)
       (start-server! custom-server)
       (restart-server! custom-server))))
@@ -45,3 +47,5 @@
   [& args]
   (println "\nCreating your server...")
   (start! :prod))
+
+(start! :dev)
