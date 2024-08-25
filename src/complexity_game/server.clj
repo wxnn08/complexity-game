@@ -1,7 +1,9 @@
 (ns complexity-game.server
   (:gen-class) ; for -main method in uberjar
-  (:require [io.pedestal.http :as http]
-            [complexity-game.service :as service]))
+  (:require
+   [complexity-game.service :as service]
+   [io.pedestal.http :as http]
+   [io.pedestal.http.cors :refer [allow-origin]]))
 
 (defn service-prod []
   {:env :prod
@@ -31,12 +33,17 @@
   (stop-server!)
   (start-server! server-env))
 
+(def cors-interceptor
+  (allow-origin {:allowed-origins #{"http://localhost:3000", "https://complexity-game-website.onrender.com"}
+                 :allowed-methods [:get :post :put :delete :options]}))
+
 (defn start! [env]
   (let [service (if (= :prod env)
                   (service-prod)
                   (service-dev))
         custom-server (http/create-server (-> service
                                               http/default-interceptors
+                                              (update ::http/interceptors conj cors-interceptor)
                                               (update ::http/interceptors into [http/json-body])))]
     (if (nil? @server)
       (start-server! custom-server)
