@@ -13,10 +13,10 @@
 
       ["/api/code"
        :get
-       c.code/list-of-codes
+       c.code/list-of-codes!
        :route-name :code]
 
       ["/api/code/:quantity"
        :get
-       c.code/list-of-codes
+       c.code/list-of-codes!
        :route-name :list-of-codes]}))

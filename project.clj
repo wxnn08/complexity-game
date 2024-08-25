@@ -12,7 +12,13 @@
                  [ch.qos.logback/logback-classic "1.2.10" :exclusions [org.slf4j/slf4j-api]]
                  [org.slf4j/jul-to-slf4j "1.7.35"]
                  [org.slf4j/jcl-over-slf4j "1.7.35"]
-                 [org.slf4j/log4j-over-slf4j "1.7.35"]]
+                 [org.slf4j/log4j-over-slf4j "1.7.35"]
+                 [clj-http "3.13.0"]
+                 [google-apps-clj "0.6.1"]
+                 [clj-jwt "0.1.1"]
+                 [clj-time "0.15.2"]
+                 [environ "1.2.0"]]
+  :plugins [[lein-environ "1.2.0"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "complexity-game.server/run-dev"]}
