@@ -1,0 +1,1 @@
+["^ ","~$foo",["^ ","~:row",12,"~:col",1,"~:fixed-arities",["~#set",[1]],"~:name","^0","~:ns","~$clojure.core.typed.test.nested-tfn-operator","~:top-ns","^7","~:type","~:fn"],"~:filename","/home/wesley/.m2/repository/org/clojure/core.typed/0.3.14/core.typed-0.3.14.jar:clojure/core/typed/test/nested_tfn_operator.clj"]

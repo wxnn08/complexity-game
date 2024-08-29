@@ -1,0 +1,1 @@
+["^ ","~$load-if-needed",["^ ","~:row",8,"~:col",1,"~:fixed-arities",["~#set",[0]],"~:name","^0","~:ns","~$clojure.core.typed.load-if-needed","~:top-ns","^7","~:type","~:fn"],"~:filename","/home/wesley/.m2/repository/org/clojure/core.typed.rt/0.3.14/core.typed.rt-0.3.14.jar:clojure/core/typed/load_if_needed.clj"]

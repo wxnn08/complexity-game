@@ -3,9 +3,10 @@
   (:require
    [complexity-game.service :as service]
    [io.pedestal.http :as http]
-   [io.pedestal.http.cors :refer [allow-origin]]))
+   [io.pedestal.http.cors :refer [allow-origin]]
+   [environ.core :refer [env]]))
 
-(defn service-prod []
+(def service-prod
   {:env :prod
    ::http/routes (service/routes)
    ::http/resource-path "/public"
@@ -16,8 +17,8 @@
                              :h2? false
                              :ssl? false}})
 
-(defn service-dev []
-  (-> (service-prod)
+(def service-dev
+  (-> service-prod
       (merge {::http/join? false})))
 
 (defonce server (atom nil))
@@ -33,14 +34,13 @@
   (stop-server!)
   (start-server! server-env))
 
-(def cors-interceptor
-  (allow-origin {:allowed-origins #{"http://localhost:3000", "https://complexity-game-website.onrender.com"}
+(defn cors-interceptor [server-env]
+  (allow-origin {:allowed-origins #{(env (if (= server-env :prod) :url :local-url))}
                  :allowed-methods [:get :post :put :delete :options]}))
 
 (defn start! [env]
-  (let [service (if (= :prod env)
-                  (service-prod)
-                  (service-dev))
+  (let [service          (if (= :prod env) service-prod service-dev)
+        cors-interceptor (cors-interceptor env)
         custom-server (http/create-server (-> service
                                               http/default-interceptors
                                               (update ::http/interceptors conj cors-interceptor)
@@ -49,8 +49,8 @@
       (start-server! custom-server)
       (restart-server! custom-server))))
 
-(defn -main
-  "The entry-point for 'lein run'"
-  [& args]
+(defn -main [& _]
   (println "\nCreating your server...")
   (start! :prod))
+
+;(start! :dev)
