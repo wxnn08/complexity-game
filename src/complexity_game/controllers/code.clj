@@ -12,5 +12,5 @@
         quantity        (min 15 (Integer. (:quantity path-params)))
         codes           (take quantity (shuffle code-data))]
     {:status 200
-     :body {:code-list codes
+     :body {:codes codes
             :complexity-cost complexity-cost}}))
