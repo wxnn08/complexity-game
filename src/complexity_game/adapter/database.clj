@@ -8,11 +8,10 @@
 
 (defn database->internal [data]
   (let [keys   (->> data
-                    ffirst
+                    first
                     extract-line
                     (map keyword))
         values (->> data
-                    first
                     rest
                     (map #(extract-line %))
                     (remove (partial some nil?)))]
