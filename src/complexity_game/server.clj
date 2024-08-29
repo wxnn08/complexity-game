@@ -52,5 +52,3 @@
 (defn -main [& _]
   (println "\nCreating your server...")
   (start! :prod))
-
-;(start! :dev)

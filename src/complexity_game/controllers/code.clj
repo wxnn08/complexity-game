@@ -1,19 +1,16 @@
 (ns complexity-game.controllers.code
   (:require
    [complexity-game.adapter.database :refer [database->internal]]
-   [google-apps-clj.credentials :as c]
-   [google-apps-clj.google-sheets-v4 :as sheetsv4]))
+   [complexity-game.misc.google-sheets :as sheets]
+   [complexity-game.model.schemas :as m.schemas]
+   [schema.core :as s]))
 
-(defn get-sheets-data! []
-  (let [scopes ["https://www.googleapis.com/auth/spreadsheets"]
-        creds (c/default-credential scopes)
-        service (sheetsv4/build-service creds)]
-    (sheetsv4/get-cells service "1WEVeZFkf3SVBx5bqrJXqhLsxr-KllYvTwyia7gobq84" ["data!A:E"])))
-
-(defn list-of-codes!
+(s/defn list-of-codes! :- m.schemas/CodeListResponse
   [{:keys [path-params]}]
-  (let [data     (database->internal (get-sheets-data!))
-        quantity (min 15 (Integer. (:quantity path-params)))
-        codes    (take quantity (shuffle data))]
+  (let [code-data       (database->internal (first (sheets/code-data!)))
+        complexity-cost (database->internal (first (sheets/complexity-cost-data!)))
+        quantity        (min 15 (Integer. (:quantity path-params)))
+        codes           (take quantity (shuffle code-data))]
     {:status 200
-     :body {:codes codes}}))
+     :body {:code-list codes
+            :complexity-cost complexity-cost}}))
