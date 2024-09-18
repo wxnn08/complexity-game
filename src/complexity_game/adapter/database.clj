@@ -5,7 +5,6 @@
     (map #(some-> % (get "effectiveValue") first val) line)
     (catch Exception _ nil)))
 
-
 (defn database->internal [data]
   (let [keys   (->> data
                     first
@@ -13,6 +12,6 @@
                     (map keyword))
         values (->> data
                     rest
-                    (map #(extract-line %))
+                    (map extract-line)
                     (remove (partial some nil?)))]
     (map (partial zipmap keys) values)))

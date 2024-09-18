@@ -2,9 +2,10 @@
   (:gen-class) ; for -main method in uberjar
   (:require
    [complexity-game.service :as service]
+   [environ.core :refer [env]]
    [io.pedestal.http :as http]
-   [io.pedestal.http.cors :refer [allow-origin]]
-   [environ.core :refer [env]]))
+   [io.pedestal.http.body-params :refer [body-params]]
+   [io.pedestal.http.cors :refer [allow-origin]]))
 
 (def service-prod
   {:env :prod
@@ -44,7 +45,7 @@
         custom-server (http/create-server (-> service
                                               http/default-interceptors
                                               (update ::http/interceptors conj cors-interceptor)
-                                              (update ::http/interceptors into [http/json-body])))]
+                                              (update ::http/interceptors into [(body-params) http/json-body])))]
     (if (nil? @server)
       (start-server! custom-server)
       (restart-server! custom-server))))
