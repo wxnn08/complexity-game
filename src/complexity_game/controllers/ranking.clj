@@ -9,8 +9,6 @@
   [{:keys [query-params]}]
   (let [group (get query-params :group "general")
         ranking-data (sheets/get-ranking-data group)]
-    (println "query-params" query-params)
-    (println "get-ranking" group ranking-data)
     {:status 200
      :body {:ranking ranking-data}}))
 

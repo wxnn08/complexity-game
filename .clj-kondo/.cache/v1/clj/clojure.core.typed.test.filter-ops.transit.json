@@ -1,1 +1,0 @@
-["^ ","~$and-filter",["^ ","~:row",16,"~:col",1,"~:fixed-arities",["~#set",[0]],"~:name","^0","~:ns","~$clojure.core.typed.test.filter-ops","~:top-ns","^7"],"~$or-filter",["^ ","^1",41,"^2",1,"^3",["^4",[0]],"^5","^9","^6","^7","^8","^7"],"~:filename","/home/wesley/.m2/repository/org/clojure/core.typed/0.3.14/core.typed-0.3.14.jar:clojure/core/typed/test/filter_ops.clj"]
