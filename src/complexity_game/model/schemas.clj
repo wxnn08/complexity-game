@@ -19,7 +19,8 @@
 
 (s/defschema RankingEntry
   {:name s/Str
-   :score s/Int})
+   :score s/Int
+   :group s/Str})
 
 (s/defschema RankingResponse
   {:status s/Int

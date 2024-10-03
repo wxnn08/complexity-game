@@ -2,7 +2,8 @@
   (:require
    [google-apps-clj.credentials :as c]
    [google-apps-clj.google-sheets-v4 :as sheetsv4]
-   [complexity-game.adapter.database :refer [database->internal]]))
+   [complexity-game.adapter.database :refer [database->internal]]
+   [clojure.string :as str]))
 
 (def sheets-id "1WEVeZFkf3SVBx5bqrJXqhLsxr-KllYvTwyia7gobq84")
 
@@ -21,18 +22,21 @@
 
 (defn ranking-data! []
   (let [service (get-service)]
-    (sheetsv4/get-cells service sheets-id ["ranking!A:B"])))
+    (sheetsv4/get-cells service sheets-id ["ranking!A:C"])))
 
-(defn get-ranking-data []
+(defn get-ranking-data [group]
   (let [data    (ranking-data!)
         ranking (database->internal (first data))]
     (->> ranking
+         (remove empty?)
+         (filter #(= group (:group % "general")))
          (map (fn [entry]
-                (update entry :score #(Integer. %))))
+                (update entry :score #(Integer/parseInt % 10))))
          (sort-by :score >))))
 
 (defn append-ranking-data! [entry]
   (let [service (get-service)
         sheet-id (sheetsv4/obtain-sheet-id service sheets-id "ranking")
-        values   [[(:name entry) (str (:score entry))]]]
+        values   [[(:name entry) (str (:score entry)) (:group entry)]]]
+
     (sheetsv4/append-sheet service sheets-id sheet-id values)))
