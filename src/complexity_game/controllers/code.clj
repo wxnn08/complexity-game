@@ -9,7 +9,7 @@
   [{:keys [path-params]}]
   (let [code-data       (database->internal (first (sheets/code-data!)))
         complexity-cost (database->internal (first (sheets/complexity-cost-data!)))
-        quantity        (min 15 (Integer. (:quantity path-params)))
+        quantity        (Integer. (:quantity path-params))
         codes           (take quantity (shuffle code-data))]
     {:status 200
      :body {:codes codes
