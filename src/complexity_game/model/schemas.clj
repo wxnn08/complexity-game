@@ -20,7 +20,8 @@
 (s/defschema RankingEntry
   {:name s/Str
    :score s/Int
-   :group s/Str})
+   :group s/Str
+   :timestamp s/Str})
 
 (s/defschema RankingResponse
   {:status s/Int

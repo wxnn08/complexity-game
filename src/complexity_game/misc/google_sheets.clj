@@ -22,7 +22,7 @@
 
 (defn ranking-data! []
   (let [service (get-service)]
-    (sheetsv4/get-cells service sheets-id ["ranking!A:C"])))
+    (sheetsv4/get-cells service sheets-id ["ranking!A:D"])))
 
 (defn get-ranking-data [group]
   (let [data    (ranking-data!)
@@ -31,12 +31,13 @@
          (remove empty?)
          (filter #(= group (:group % "general")))
          (map (fn [entry]
-                (update entry :score #(Integer/parseInt % 10))))
+                (-> entry
+                    (update :score #(Integer/parseInt % 10)))))
          (sort-by :score >))))
 
 (defn append-ranking-data! [entry]
   (let [service (get-service)
         sheet-id (sheetsv4/obtain-sheet-id service sheets-id "ranking")
-        values   [[(:name entry) (str (:score entry)) (:group entry)]]]
+        values   [[(:name entry) (str (:score entry)) (:group entry) (:timestamp entry)]]]
 
     (sheetsv4/append-sheet service sheets-id sheet-id values)))
