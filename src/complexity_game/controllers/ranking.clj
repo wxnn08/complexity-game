@@ -15,7 +15,8 @@
 (s/defn update-ranking! :- {:status s/Int :body {:message s/Str}}
   [{:keys [json-params]}]
   (let [{:keys [name score group]} json-params
-        group-name (if (str/blank? group) "general" group)]
-    (sheets/append-ranking-data! {:name name :score score :group group-name})
+        group-name (if (str/blank? group) "general" group)
+        timestamp (str (java.time.LocalDateTime/now))]
+    (sheets/append-ranking-data! {:name name :score score :group group-name :timestamp timestamp})
     {:status 200
      :body {:message "Ranking atualizado com sucesso"}}))
