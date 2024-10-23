@@ -25,5 +25,5 @@
              :uberjar {:aot [complexity-game.server]}}
   :env {:local-url "http://localhost:3000"
         :url-1 "https://complexity-game-website.onrender.com"
-        :url-2 "https://bigobattle.online/"}
+        :url-2 "https://bigobattle.online"}
   :main ^{:skip-aot true} complexity-game.server)
