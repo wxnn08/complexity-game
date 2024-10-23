@@ -36,7 +36,9 @@
   (start-server! server-env))
 
 (defn cors-interceptor [server-env]
-  (allow-origin {:allowed-origins #{(env (if (= server-env :prod) :url :local-url))}
+  (allow-origin {:allowed-origins (if (= server-env :prod)
+                                    #{(env :url-1) (env :url-2)}
+                                    #{(env :local-url)})
                  :allowed-methods [:get :post :put :delete :options]}))
 
 (defn start! [env]

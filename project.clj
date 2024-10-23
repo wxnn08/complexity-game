@@ -24,5 +24,6 @@
                    :dependencies [[io.pedestal/pedestal.service-tools "0.6.3"]]}
              :uberjar {:aot [complexity-game.server]}}
   :env {:local-url "http://localhost:3000"
-        :url "https://complexity-game-website.onrender.com"}
+        :url-1 "https://complexity-game-website.onrender.com"
+        :url-2 "https://bigobattle.online/"}
   :main ^{:skip-aot true} complexity-game.server)
