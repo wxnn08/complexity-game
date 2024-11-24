@@ -23,7 +23,8 @@
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "complexity-game.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.6.3"]]}
              :uberjar {:aot [complexity-game.server]}}
-  :env {:local-url "http://localhost:3000"
+  :env {:local-url1 "http://localhost:3000"
+        :local-url2 "http://192.168.0.9:3000"
         :url-1 "https://complexity-game-website.onrender.com"
         :url-2 "https://bigobattle.online"}
   :main ^{:skip-aot true} complexity-game.server)

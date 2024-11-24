@@ -19,9 +19,11 @@
 
 (s/defschema RankingEntry
   {:name s/Str
-   :score s/Int
-   :group s/Str
-   :timestamp s/Str})
+   :correct_answers s/Int
+   :mistakes s/Int
+   :timestamp_begin s/Str
+   :timestamp_end s/Str
+   :group s/Str})
 
 (s/defschema RankingResponse
   {:status s/Int
